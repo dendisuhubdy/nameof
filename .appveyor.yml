@@ -20,13 +20,18 @@ environment:
   matrix:
     - GENERATOR: "Visual Studio 15 2017"
 
+install:
+  - cmmd: set PATH=%PATH%;%PYTHON%/Scripts/
+  - cmmd: pip.exe install conan
+  - cmmd: conan user
+
 before_build:
   - if exist build RMDIR /S /Q build
   - if not exist build mkdir build
   - cd build
-  - cmake -G "%GENERATOR%" -A %PLATFORM% ..
 
 build_script:
+  - cmake -G "%GENERATOR%" -A %PLATFORM% ..
   - cmake --build . --config %CONFIGURATION%
 
 test_script:
